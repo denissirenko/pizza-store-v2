@@ -1,12 +1,11 @@
 import React from 'react';
 
-export const Categories = () => {
-  const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
-  const [activeIndex, setActiveIndex] = React.useState(0);
+import { CategoriesContext } from '../pages/Home';
 
-  const onClickCategory = (index) => {
-    setActiveIndex(index);
-  };
+export const Categories = ({ activeCategories, handlerActiveCategories }) => {
+  const categoriesContext = React.useContext(CategoriesContext);
+
+  const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
   return (
     <div className="categories">
@@ -15,8 +14,8 @@ export const Categories = () => {
           return (
             <li
               key={item}
-              onClick={() => onClickCategory(index)}
-              className={activeIndex === index ? 'active' : ''}>
+              onClick={() => categoriesContext.onClickCategory(index)}
+              className={categoriesContext.activeIndex === index ? 'active' : ''}>
               {item}
             </li>
           );

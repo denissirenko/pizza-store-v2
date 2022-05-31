@@ -1,5 +1,7 @@
 import logoSvg from '../assets/img/pizza-logo.svg';
 
+// import { Search } from '../components/search';
+
 import { Link } from 'react-router-dom';
 
 export const Header = () => {
@@ -8,11 +10,12 @@ export const Header = () => {
       <div className="container">
         <Link to="/" className="header__logo">
           <img width="38" src={logoSvg} alt="Pizza logo" />
-          <div>
+          <div className="header__logo-name">
             <h1>React Pizza</h1>
             <p>самая вкусная пицца во вселенной</p>
           </div>
         </Link>
+        {/* <Search /> */}
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
             <span>520 ₽</span>
