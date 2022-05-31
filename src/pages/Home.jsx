@@ -6,6 +6,7 @@ import { Skeleton } from '../components/PizzaBlock/Skeleton';
 // import { Pagination } from '../components/pagination';
 
 export const CategoriesContext = React.createContext();
+export const SortContext = React.createContext();
 
 export const Home = () => {
   const [pizzas, setPizzas] = React.useState([]);
@@ -14,6 +15,14 @@ export const Home = () => {
   const [activeIndex, setActiveIndex] = React.useState(0);
   const onClickCategory = (index) => {
     setActiveIndex(index);
+  };
+  // for Sort
+  const [open, setOpen] = React.useState(false);
+  const [sortActive, setSortActive] = React.useState(0);
+
+  const handlerSortActive = (index) => {
+    setSortActive(index);
+    setOpen(false);
   };
 
   React.useEffect(() => {
@@ -36,14 +45,16 @@ export const Home = () => {
           <CategoriesContext.Provider value={{ activeIndex, onClickCategory }}>
             <Categories />
           </CategoriesContext.Provider>
-          <Sort />
+          <SortContext.Provider value={{ open, setOpen, sortActive, handlerSortActive }}>
+            <Sort />
+          </SortContext.Provider>
         </div>
         <h2 className="content__title">Все пиццы</h2>
         <div className="content__items-wrap">
           <div className="content__items">
             {isLoading
-              ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
-              : pizzas.map((obj) => <PizzaBlock key={obj.title} {...obj} />)}
+              ? pizzas.map((obj) => <Skeleton key={obj.id} />)
+              : pizzas.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
           </div>
         </div>
         {/* <Pagination /> */}

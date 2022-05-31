@@ -1,16 +1,17 @@
 import React from 'react';
 
+import { SortContext } from '../pages/Home';
+
 export const Sort = () => {
-  const [open, setOpen] = React.useState(false);
-  const [sortActive, setSortActive] = React.useState(0);
+  const { open, setOpen, sortActive, handlerSortActive } = React.useContext(SortContext);
 
-  const list = ['популярности', 'цене', 'алфавиту'];
-  const sortActiveName = list[sortActive];
+  const sortItems = [
+    { name: 'популярности', type: 'popular', order: 'desc' },
+    { name: 'цене', type: 'price', order: 'asc' },
+    { name: 'алфавит', type: 'name', order: 'asc' },
+  ];
 
-  const handlerSortActive = (index) => {
-    setSortActive(index);
-    setOpen(false);
-  };
+  const sortActiveName = sortItems[sortActive].name;
 
   return (
     <div className="sort">
@@ -32,12 +33,12 @@ export const Sort = () => {
       {open && (
         <div className="sort__popup">
           <ul>
-            {list.map((item, index) => (
+            {sortItems.map(({ name, type, order }, index) => (
               <li
-                key={item}
+                key={type}
                 onClick={() => handlerSortActive(index)}
                 className={sortActive === index ? 'active' : ''}>
-                {item}
+                {name}
               </li>
             ))}
           </ul>
