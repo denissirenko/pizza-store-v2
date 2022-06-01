@@ -1,9 +1,13 @@
 import React from 'react';
 
-import { SortContext } from '../pages/Home';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSort } from '../redux/slices/filterSlice';
 
 export const Sort = () => {
-  const { open, setOpen, sortActive, handlerSortActive } = React.useContext(SortContext);
+  const dispatch = useDispatch();
+  const sort = useSelector((state) => state.filter.sort);
+
+  const [open, setOpen] = React.useState(false);
 
   const sortItems = [
     { name: 'популярности', type: 'popular', order: 'desc' },
@@ -11,7 +15,10 @@ export const Sort = () => {
     { name: 'алфавит', type: 'name', order: 'asc' },
   ];
 
-  const sortActiveName = sortItems[sortActive].name;
+  const handlerSortActive = (obj) => {
+    dispatch(setSort(obj));
+    setOpen(false);
+  };
 
   return (
     <div className="sort">
@@ -28,7 +35,7 @@ export const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpen(!open)}>{sortActiveName}</span>
+        <span onClick={() => setOpen(!open)}>{sort.name}</span>
       </div>
       {open && (
         <div className="sort__popup">
@@ -36,8 +43,8 @@ export const Sort = () => {
             {sortItems.map(({ name, type, order }, index) => (
               <li
                 key={type}
-                onClick={() => handlerSortActive(index)}
-                className={sortActive === index ? 'active' : ''}>
+                onClick={() => handlerSortActive(sortItems[index])}
+                className={sort.type === sortItems[index].type ? 'active' : ''}>
                 {name}
               </li>
             ))}
