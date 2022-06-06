@@ -6,7 +6,6 @@ import { setCategoryId } from '../redux/slices/filterSlice';
 export const Categories = () => {
   const dispatch = useDispatch();
   const categoryId = useSelector((state) => state.filter.categoryId);
-
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
   const onChangeCategory = (index) => {
