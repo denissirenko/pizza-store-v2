@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setSort } from '../redux/slices/filterSlice';
 
 export const sortItems = [
-  { name: 'популярности', type: 'popular', order: 'desc' },
-  { name: 'цене', type: 'price', order: 'asc' },
-  { name: 'алфавит', type: 'name', order: 'asc' },
+  { name: 'популярності', type: 'popular', order: 'desc' },
+  { name: 'ціні', type: 'price', order: 'asc' },
+  { name: 'алфавіт', type: 'name', order: 'asc' },
 ];
 
 export const Sort = () => {
@@ -49,7 +49,7 @@ export const Sort = () => {
             fill="#2C2C2C"
           />
         </svg>
-        <b>Сортировка по:</b>
+        <b>Сортування за:</b>
         <span onClick={() => setOpen(!open)}>{sort.name}</span>
       </div>
       {open && (

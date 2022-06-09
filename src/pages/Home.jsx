@@ -43,19 +43,28 @@ export const Home = () => {
     // navigate(`?${queryString}`);
     // for navigate
 
-    setIsLoading(true);
+    const fetchPizzas = async () => {
+      setIsLoading(true);
 
-    const activeParamsCategories = categoryId !== 0 ? `category=${categoryId}` : '';
-    const activeParamsSort = `&_sort=${sort.type}&_order=${sort.order}`;
+      const activeParamsCategories = categoryId !== 0 ? `category=${categoryId}` : '';
+      const activeParamsSort = `&_sort=${sort.type}&_order=${sort.order}`;
 
-    axios
-      .get(
+      const res = await axios.get(
         `https://sirenko-pizza-app.herokuapp.com/pizzas?${activeParamsCategories}${activeParamsSort}`,
-      )
-      .then((res) => {
+      );
+
+      try {
         setPizzas(res.data);
+      } catch (error) {
+        alert('Error');
+      } finally {
         setIsLoading(false);
-      });
+      }
+    };
+
+    fetchPizzas();
+
+    window.scrollTo(0, 0);
   }, [categoryId, sort]);
 
   return (
@@ -65,7 +74,7 @@ export const Home = () => {
           <Categories />
           <Sort />
         </div>
-        <h2 className="content__title">Все пиццы</h2>
+        <h2 className="content__title">Усі піци</h2>
         <div className="content__items-wrap">
           <div className="content__items">
             {isLoading

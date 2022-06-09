@@ -4,7 +4,10 @@ import { useSelector } from 'react-redux';
 import logoSvg from '../assets/img/pizza-logo.svg';
 
 export const Header = () => {
-  const { totalPrice, items } = useSelector((state) => state.cart);
+  const { items, totalPrice } = useSelector((state) => state.cart);
+
+  const totalCount = items?.reduce((sum, item) => sum + item.count, 0);
+
   return (
     <div className="header">
       <div className="container">
@@ -12,7 +15,7 @@ export const Header = () => {
           <img width="38" src={logoSvg} alt="Pizza logo" />
           <div className="header__logo-name">
             <h1>React Pizza</h1>
-            <p>самая вкусная пицца во вселенной</p>
+            <p>Everything Will Be Ukraine</p>
           </div>
         </Link>
         {/* <Search /> */}
@@ -48,7 +51,7 @@ export const Header = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span>{items.length}</span>
+            <span>{totalCount}</span>
           </Link>
         </div>
       </div>
