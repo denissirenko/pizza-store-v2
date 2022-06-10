@@ -23,15 +23,31 @@
     }
 
     h1 {
-      color: #181818;
+      // color: #181818;
+      color: #ffd700;
       font-size: 24px;
       letter-spacing: 1%;
       text-transform: uppercase;
       font-weight: 800;
+      &:before {
+        position: absolute;
+        content: 'React Pizza';
+        color: #0057b7;
+        height: 15px;
+        overflow: hidden;
+      }
     }
 
     p {
       color: #7b7b7b;
+      // color: #ffd700;
+      // &:before {
+      //   position: absolute;
+      //   content: 'Everything Will Be Ukraine';
+      //   color: #0057b7;
+      //   height: 11px;
+      //   overflow: hidden;
+      // }
     }
   }
 }

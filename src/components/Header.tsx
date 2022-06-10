@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -5,10 +6,10 @@ import { selectCart } from '../redux/slices/cartSlice';
 
 import logoSvg from '../assets/img/pizza-logo.svg';
 
-export const Header = () => {
+export const Header: React.FC = () => {
   const { items, totalPrice } = useSelector(selectCart);
 
-  const totalCount = items?.reduce((sum, item) => sum + item.count, 0);
+  const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0);
 
   return (
     <div className="header">
@@ -17,10 +18,9 @@ export const Header = () => {
           <img width="38" src={logoSvg} alt="Pizza logo" />
           <div className="header__logo-name">
             <h1>React Pizza</h1>
-            <p>Everything Will Be Ukraine</p>
+            <p className="Ukr-text">Everything Will Be Ukraine</p>
           </div>
         </Link>
-        {/* <Search /> */}
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
             <span>{totalPrice} грн</span>

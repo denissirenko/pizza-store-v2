@@ -11,7 +11,7 @@ import { Skeleton } from '../components/PizzaBlock/Skeleton';
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 import { selectFilter, selectSort } from '../redux/slices/filterSlice';
 
-export const Home = () => {
+export const Home: React.FC = () => {
   const dispatch = useDispatch();
   // const navigate = useNavigate();
   const categoryId = useSelector(selectFilter);
@@ -46,6 +46,7 @@ export const Home = () => {
       const activeParamsSort = `&_sort=${sort.type}&_order=${sort.order}`;
 
       dispatch(
+        //@ts-ignore
         fetchPizzas({
           activeParamsCategories,
           activeParamsSort,
@@ -59,7 +60,7 @@ export const Home = () => {
   }, [categoryId, sort, dispatch]);
 
   const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index} />);
-  const pizzas = items?.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+  const pizzas = items?.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
 
   return (
     <>

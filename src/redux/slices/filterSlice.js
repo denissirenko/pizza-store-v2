@@ -5,7 +5,7 @@ export const filterSlice = createSlice({
   initialState: {
     categoryId: 0,
     sort: {
-      name: 'популярности',
+      name: 'популярності',
       type: 'popular',
       order: 'desc',
     },
