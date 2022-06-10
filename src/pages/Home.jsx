@@ -1,24 +1,22 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // import { useNavigate } from 'react-router-dom';
 
-// import { setFilters } from '../redux/slices/filterSlice';
-
 // import qs from 'qs';
-import axios from 'axios';
 import { PizzaBlock } from '../components/PizzaBlock';
 import { Sort } from '../components/Sort';
 import { Categories } from '../components/Categories';
 import { Skeleton } from '../components/PizzaBlock/Skeleton';
 
-export const Home = () => {
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
-  const categoryId = useSelector((state) => state.filter.categoryId);
-  const sort = useSelector((state) => state.filter.sort);
+import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
+import { selectFilter, selectSort } from '../redux/slices/filterSlice';
 
-  const [pizzas, setPizzas] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+export const Home = () => {
+  const dispatch = useDispatch();
+  // const navigate = useNavigate();
+  const categoryId = useSelector(selectFilter);
+  const sort = useSelector(selectSort);
+  const { items, status } = useSelector(selectPizzaData);
 
   // React.useEffect(() => {
   //   const params = qs.parse(window.location.search.substring(1));
@@ -43,46 +41,40 @@ export const Home = () => {
     // navigate(`?${queryString}`);
     // for navigate
 
-    const fetchPizzas = async () => {
-      setIsLoading(true);
-
+    const getPizzas = async () => {
       const activeParamsCategories = categoryId !== 0 ? `category=${categoryId}` : '';
       const activeParamsSort = `&_sort=${sort.type}&_order=${sort.order}`;
 
-      const res = await axios.get(
-        `https://sirenko-pizza-app.herokuapp.com/pizzas?${activeParamsCategories}${activeParamsSort}`,
+      dispatch(
+        fetchPizzas({
+          activeParamsCategories,
+          activeParamsSort,
+        }),
       );
-
-      try {
-        setPizzas(res.data);
-      } catch (error) {
-        alert('Error');
-      } finally {
-        setIsLoading(false);
-      }
     };
 
-    fetchPizzas();
+    getPizzas();
 
     window.scrollTo(0, 0);
-  }, [categoryId, sort]);
+  }, [categoryId, sort, dispatch]);
+
+  const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index} />);
+  const pizzas = items?.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
 
   return (
-    <div>
-      <>
-        <div className="content__top">
-          <Categories />
-          <Sort />
-        </div>
-        <h2 className="content__title">Усі піци</h2>
+    <>
+      <div className="content__top">
+        <Categories />
+        <Sort />
+      </div>
+      <h2 className="content__title">Усі піци</h2>
+      {status === 'error' ? (
+        <h3 style={{ color: '#fe5f1e', textAlign: 'center' }}>Something went wrong!!!</h3>
+      ) : (
         <div className="content__items-wrap">
-          <div className="content__items">
-            {isLoading
-              ? pizzas?.map((obj) => <Skeleton key={obj.id} />)
-              : pizzas?.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
-          </div>
+          <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
         </div>
-      </>
-    </div>
+      )}
+    </>
   );
 };
