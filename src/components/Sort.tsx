@@ -9,6 +9,14 @@ type SortItem = {
   order: string;
 };
 
+type PopupClick = MouseEvent & {
+  path: Node[];
+};
+
+// type SortPopupProps = {
+//   value: SortType;
+// };
+
 export const sortItems: SortItem[] = [
   { name: 'популярності', type: 'popular', order: 'desc' },
   { name: 'ціні', type: 'price', order: 'asc' },
@@ -29,8 +37,9 @@ export const Sort: React.FC = () => {
   };
 
   React.useEffect(() => {
-    const handleClickOutside = (e: any) => {
-      if (!e.path.includes(sortRef.current)) {
+    const handleClickOutside = (e: MouseEvent) => {
+      const _e = e as PopupClick;
+      if (sortRef.current && !_e.path.includes(sortRef.current)) {
         setOpen(false);
       }
     };
