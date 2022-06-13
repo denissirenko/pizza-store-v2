@@ -1,5 +1,6 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../redux/store';
 // import { useNavigate } from 'react-router-dom';
 
 // import qs from 'qs';
@@ -12,7 +13,7 @@ import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 import { selectFilter, selectSort } from '../redux/slices/filterSlice';
 
 export const Home: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   // const navigate = useNavigate();
   const categoryId = useSelector(selectFilter);
   const sort = useSelector(selectSort);
@@ -46,7 +47,6 @@ export const Home: React.FC = () => {
       const activeParamsSort = `&_sort=${sort.type}&_order=${sort.order}`;
 
       dispatch(
-        //@ts-ignore
         fetchPizzas({
           activeParamsCategories,
           activeParamsSort,

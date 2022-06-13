@@ -5,7 +5,7 @@ import { setSort, selectSort } from '../redux/slices/filterSlice';
 
 type SortItem = {
   name: string;
-  type: string;
+  type: 'popular' | 'price' | 'name';
   order: string;
 };
 
