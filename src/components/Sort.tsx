@@ -54,6 +54,7 @@ export const Sort: React.FC = () => {
     <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
+          className={open ? 'rotated' : ''}
           width="10"
           height="6"
           viewBox="0 0 10 6"
