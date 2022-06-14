@@ -33,7 +33,7 @@ export const fetchPizzas = createAsyncThunk<Pizza[], Record<string, string>>(
   async (params) => {
     const { activeParamsCategories, activeParamsSort } = params;
     const { data } = await axios.get(
-      `https://sirenko-pizza-app.herokuapp.com/pizzas?${activeParamsCategories}${activeParamsSort}`,
+      `https://sirenko-pizza-v2.herokuapp.com/pizzas?${activeParamsCategories}${activeParamsSort}`,
     );
     return data;
   },
