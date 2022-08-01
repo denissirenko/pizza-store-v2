@@ -1,9 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../redux/store';
-// import { useNavigate } from 'react-router-dom';
-
-// import qs from 'qs';
 import { PizzaBlock } from '../components/PizzaBlock';
 import { Sort } from '../components/Sort';
 import { Categories } from '../components/Categories';
@@ -14,34 +11,11 @@ import { selectFilter, selectSort } from '../redux/slices/filterSlice';
 
 export const Home: React.FC = () => {
   const dispatch = useAppDispatch();
-  // const navigate = useNavigate();
   const categoryId = useSelector(selectFilter);
   const sort = useSelector(selectSort);
   const { items, status } = useSelector(selectPizzaData);
 
-  // React.useEffect(() => {
-  //   const params = qs.parse(window.location.search.substring(1));
-
-  //   const sort = sortItems.find((obj) => obj.type === params.sort);
-
-  //   dispatch(
-  //     setFilters({
-  //       ...params,
-  //       sort,
-  //     }),
-  //   );
-  // }, []);
-
   React.useEffect(() => {
-    // for navigate
-    // const queryString = qs.stringify({
-    //   categoryId,
-    //   sort: sort.type,
-    //   order: sort.order,
-    // });
-    // navigate(`?${queryString}`);
-    // for navigate
-
     const getPizzas = async () => {
       const activeParamsCategories = categoryId !== 0 ? `category=${categoryId}` : '';
       const activeParamsSort = `&_sort=${sort.type}&_order=${sort.order}`;
@@ -66,7 +40,7 @@ export const Home: React.FC = () => {
     <>
       <div className="content__top">
         <Categories />
-        <Sort />
+        <Sort value={sort} />
       </div>
       <h2 className="content__title">Усі піци</h2>
       {status === 'error' ? (

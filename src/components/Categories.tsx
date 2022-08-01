@@ -5,13 +5,16 @@ import { setCategoryId, selectFilter } from '../redux/slices/filterSlice';
 
 const categories = ['Всі', "М'ясні", 'Вегетаріанська', 'Гриль', 'Гострі', 'Закриті'];
 
-export const Categories: React.FC = () => {
+export const Categories: React.FC = React.memo(() => {
   const dispatch = useDispatch();
   const categoryId = useSelector(selectFilter);
 
-  const onChangeCategory = (index: number) => {
-    dispatch(setCategoryId(index));
-  };
+  const onChangeCategory = React.useCallback(
+    (index: number) => {
+      dispatch(setCategoryId(index));
+    },
+    [dispatch],
+  );
 
   return (
     <div className="categories">
@@ -29,4 +32,4 @@ export const Categories: React.FC = () => {
       </ul>
     </div>
   );
-};
+});
